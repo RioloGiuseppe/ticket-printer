@@ -1,16 +1,11 @@
 import { PDFCreator } from "./pdf-creator";
 
-PDFCreator.print("Table 1", [
-    {
-        key: "Pasta",
-        value: "1"
-    },
-    {
-        key: "餃子",
-        value: "12"
-    },
-    {
-        key: "Boooo",
-        value: "7"
-    }
-], "ticket.pdf")
+let fname = "ticket.pdf"
+let len = PDFCreator.print("Title", [
+    { key: "Sample 1", value: "1" },
+    { key: "サンプル 1", value: "2" },
+    { key: "Sample 2", value: "1" },
+    { key: "サンプル 2", value: "2" }
+], fname);
+
+console.log(`Size of ${fname} is 80x${len}mm`);
