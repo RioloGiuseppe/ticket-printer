@@ -16,8 +16,9 @@ export class PDFCreator {
             pageBreakBefore: (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) =>
                 currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0,
             pageSize: { width: 227, height: 'auto' },
-            pageMargins: [5, 10, 5, 15],
+            pageMargins: [15, 10, 15, 10],
             defaultStyle: { font: 'MPLUS1p', fontSize: 13 },
+            compress: false,
             content: [
                 { text: table, style: { alignment: 'center', fontSize: 17 } },
                 {
@@ -37,11 +38,12 @@ export class PDFCreator {
         this.printer = new pdfmake(this.fonts);
     }
 
-    public static print(table: string, data: PdfLine[], fname: string) {
+    public static print(table: string, data: PdfLine[], fname: string): number {
         this.init();
-
         var pdfDoc = this.printer.createPdfKitDocument(this.prepare(table, data));
+        let h = Math.ceil(pdfDoc.page.height / pdfDoc.page.width * 80.0)
         pdfDoc.pipe(createWriteStream(fname));
         pdfDoc.end();
+        return h;
     }
 }
